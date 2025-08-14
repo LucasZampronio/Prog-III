@@ -17,4 +17,4 @@ rl.question('Digite o valor da Letra A: ', (a) => {
             }
         })
     })
-})s
+})
