@@ -1,14 +1,10 @@
 import { input } from '@inquirer/prompts';
+async function lerDados(){ 
+    const answer =  await input({ message: 'Enter your name' });
+    const idade =  await input({ message: 'Enter your age' });
+    const email =  await input({ message: 'Enter your email' });
+    const pessoa = { name: answer, age: idade, email: email };
+    return pessoa}
 
-const answer = input({ message: 'Enter your name' });
-
-function retornaQuandoDigitado(nome) { 
-    const idade = input({ message: 'Enter your age' })
-    function retornaIdade(idade) {
-        console.log(' hello ' +  nome + ' you are ' + idade + ' years old' );
-}
-    idade.then(retornaIdade)
- }
-
-
-answer.then(retornaQuandoDigitado)
+    const pessoa =  await lerDados();
+    console.log(pessoa);
