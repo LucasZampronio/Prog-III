@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       {/* <MeuComponente /> */}
-      <Questionario  listaPerguntas={listaPerguntas}/>
+      <Questionario  listaPerguntas={listaPerguntas} onFinalizou={(QuestionarioRespondido)=>(console.log(QuestionarioRespondido))}/>
     </>
   )
 }
