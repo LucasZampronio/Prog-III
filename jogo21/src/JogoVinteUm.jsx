@@ -2,19 +2,19 @@ import { useState } from "react"
 import Carta from "./Carta"
 function JogoVinteUm({ tentativas: limiteTentativas, listaCartas, verso }) {
 
-    
+
     const [tentativas, setTentativas] = useState(limiteTentativas)
     const [pontos, setPontos] = useState(0)
     const [rodada, setRodada] = useState(0)
 
 
 
-    function atualizarPontos(valorCarta) {
+    function atualizarPontos(valor) {
         if (tentativas <= 0) {
             return
         }
 
-        let total = pontos + valorCarta
+        let total = pontos + valor
         let tentativasRestantes = tentativas - 1
         setPontos(total)
         setTentativas(tentativasRestantes)
@@ -26,12 +26,16 @@ function JogoVinteUm({ tentativas: limiteTentativas, listaCartas, verso }) {
             encerrarRodada(`Suas tentativas acabaram! Pontos: ${total}`)
         }
     }
+
+
     function encerrarRodada(mensagem) {
         alert(mensagem)
         setPontos(0)
         setTentativas(limiteTentativas)
         setRodada((numero) => numero + 1)
     }
+
+
     return (
         <div>
             <h1>Jogo do 21 - alcance 21 pontos!</h1>
