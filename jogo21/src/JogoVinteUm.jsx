@@ -1,69 +1,52 @@
-import Carta from "./Carta"
 import { useState } from "react"
+import Carta from "./Carta"
+function JogoVinteUm({ tentativas: limiteTentativas, listaCartas, verso }) {
 
-
-function JogoVinteUm(props) {
-
-    const[tentativas,setTentativas] = useState(props.tentativas);
-    const[listaCartas,setListaCartas] = useState(props.listaCartas);
-    const[verso,setVerso] = useState(props.verso);
-    const[pontos,setPontos] = useState(0);
-    const[jogoAcabou,setJogoAcabou] = useState(false);
-
-
-
-    function atualizarPontos(valor){
     
-        let novosPontos = pontos;
-        novosPontos += valor;
-        setPontos(novosPontos);
+    const [tentativas, setTentativas] = useState(limiteTentativas)
+    const [pontos, setPontos] = useState(0)
+    const [rodada, setRodada] = useState(0)
 
 
-        let tentativasRestantes = tentativas;
-        tentativasRestantes--;
-        setTentativas(tentativasRestantes);
 
-        if(novosPontos > 21){
-            alert("Você perdeu! Pontos: " + novosPontos);
-            setPontos(0);
-            setTentativas(props.tentativas);
-            setJogoAcabou(true);
-
-
-        }
-        
-        else if(novosPontos == 21){
-            alert("Você ganhou! Pontos: " + novosPontos);
-            setPontos(0);
-            setTentativas(props.tentativas);
-            setJogoAcabou(true);
-
+    function atualizarPontos(valorCarta) {
+        if (tentativas <= 0) {
+            return
         }
 
+        let total = pontos + valorCarta
+        let tentativasRestantes = tentativas - 1
+        setPontos(total)
+        setTentativas(tentativasRestantes)
+        if (total > 21) {
+            encerrarRodada(`Você perdeu! Pontos: ${total}`)
+        } else if (total === 21) {
+            encerrarRodada(`Você ganhou! Pontos: ${total}`)
+        } else if (tentativasRestantes <= 0) {
+            encerrarRodada(`Suas tentativas acabaram! Pontos: ${total}`)
+        }
     }
-
+    function encerrarRodada(mensagem) {
+        alert(mensagem)
+        setPontos(0)
+        setTentativas(limiteTentativas)
+        setRodada((numero) => numero + 1)
+    }
     return (
-        <>
         <div>
-            <h1>Jogo do 21, para ganhar você deve fazer 21 pontos!</h1>
-            <p>Pontos:{pontos}</p>
-            <p>Tentativas:{tentativas}</p>
-            {listaCartas.map(carta=>
+            <h1>Jogo do 21 - alcance 21 pontos!</h1>
+            <p>Pontos: {pontos}</p>
+            <p>Tentativas: {tentativas}</p>
+            {listaCartas.map((carta, indice) => (
                 <Carta
-                    resetarJogo={jogoAcabou}
-                    onVirar={(valor)=>atualizarPontos(valor)}
-                    key ={carta.id}
+                    key={`${indice}-${rodada}`}
+                    frente={carta.img}
                     verso={verso}
                     valor={carta.valor}
-                    img= {carta.img}
-                
-                />    
-            )}
+                    onVirar={atualizarPontos}
+                />
+            ))}
         </div>
-
-        </>
     )
 }
-
-
 export default JogoVinteUm
