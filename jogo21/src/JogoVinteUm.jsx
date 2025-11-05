@@ -33,12 +33,15 @@ function JogoVinteUm({ tentativas: limiteTentativas, listaCartas, verso }) {
         setPontos(0)
         setTentativas(limiteTentativas)
         setRodada((numero) => numero + 1)
+        listaCartas= listaCartas.sort( () => .5 - Math.random());
     }
+
+    
 
 
     return (
         <div>
-            <h1>Jogo do 21 - alcance 21 pontos!</h1>
+            <h1>Jogo do 21, faça 21 pontos!</h1>
             <p>Pontos: {pontos}</p>
             <p>Tentativas: {tentativas}</p>
             {listaCartas.map((carta, indice) => (
